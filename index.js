@@ -29,12 +29,18 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case 'add':
+      if (!name || !email || !phone) {
+        throw new Error('Please, fill in all the data');
+      }
       const newContact = await contactOparations.addContact(name, email, phone);
       console.log(newContact);
       break;
 
     case 'remove':
       const removeContact = await contactOparations.removeContact(id);
+      if (!removeContact) {
+        throw new Error('Contact not found');
+      }
       console.log(removeContact);
       break;
 
